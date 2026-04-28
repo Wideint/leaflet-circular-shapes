@@ -7,7 +7,7 @@
     "module": "dist/leaflet-circularshapes.js",
     "license": "MIT",
     "scripts": {
-        "build": "rollup -c build/rollup-config.js"
+        "build": "./build.sh"
     },
     "dependencies": {
         "leaflet": "^1.9.4"
