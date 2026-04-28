@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Extra shapes for Leaflet</title>
+
+    <script type="importmap">
+        {
+          "imports": {
+            "leaflet": "https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.js",
+            "leaflet-circularshapes": "/dist/leaflet-circularshapes.js"
+          }
+        }
+    </script>
+    <link href="https://unpkg.com/leaflet@2.0.0-alpha.1/dist/leaflet.css" rel="stylesheet"/>
+    <style>
+        html, body {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        #map {
+            height: 100%;
+            width: 100%;
+        }
+    </style>
+
+</head>
+<body>
+<div id="map"></div>
+
+<script type="module">
+    import {Map, TileLayer} from "leaflet";
+    import {Disk, DiskSector, Annulus, AnnulusSector} from "leaflet-circularshapes";
+
+    const map = new Map('map').setView([48.398, -4.455], 13);
+
+    const tiles = new TileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 18,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    const disk = new Disk([48.398, -4.454],{
+        radius: 1000,
+        fillOpacity: 0.4
+    }).addTo(map);
+
+    const diskSector = new DiskSector([48.398, -4.454],{
+        radius: 1000,
+        startAngle: 0,
+        stopAngle: 60,
+        fillOpacity: 0.5
+    }).addTo(map);
+
+    const annulus = new Annulus([48.396, -4.481], {
+        radius: 1000,
+        innerRadius: 500,
+        fillOpacity: 0.4
+    }).addTo(map);
+
+    const annulusSector = new AnnulusSector([48.396, -4.481], {
+        radius: 1000,
+        innerRadius: 500,
+        startAngle: 0,
+        stopAngle: 60,
+        fillOpacity: 0.4
+    }).addTo(map);
+
+</script>
+</body>
+</html>
