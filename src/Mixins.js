@@ -9,19 +9,11 @@ function fixAngle(angle) {
 
 const sectorMixin = () => ({
   stopAngle() {
-    if (this.options.startAngle < this.options.stopAngle) {
-      return fixAngle(this.options.stopAngle);
-    } else {
-      return fixAngle(this.options.startAngle);
-    }
+    return fixAngle(this.options.startAngle + this.options.stopAngle);
   },
 
   startAngle() {
-    if (this.options.startAngle < this.options.stopAngle) {
-      return fixAngle(this.options.startAngle);
-    } else {
-      return fixAngle(this.options.stopAngle);
-    }
+    return fixAngle(this.options.startAngle);
   },
 
   _isValidSector() {
@@ -31,12 +23,11 @@ const sectorMixin = () => ({
     if (isNaN(this.options.stopAngle)) {
       throw new Error("Stop angle cannot be NaN");
     }
-    if (this.options.startAngle >= this.options.stopAngle) {
-      throw new Error("Stop angle must be greater than the start angle");
+    if (this.options.stopAngle === 0) {
+        throw new Error("Stop angle cannot be 0");
     }
   },
 });
-
 
 const annularMixin = () => ({
     /* Override Circle _project */
