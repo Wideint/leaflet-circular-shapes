@@ -26,6 +26,12 @@ const sectorMixin = () => ({
     if (this.options.stopAngle === 0) {
         throw new Error("Stop angle cannot be 0");
     }
+    if (this.options.startAngle >= 360.0) {
+      this.options.startAngle = this.options.startAngle % 360.0;
+    }
+    if (this.options.stopAngle >= 360.0) {
+      this.options.stopAngle = this.options.stopAngle % 360.0;
+    }
   },
 });
 
