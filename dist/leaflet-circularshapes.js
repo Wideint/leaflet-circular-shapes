@@ -9,19 +9,11 @@ function fixAngle(angle) {
 
 const sectorMixin = () => ({
   stopAngle() {
-    if (this.options.startAngle < this.options.stopAngle) {
-      return fixAngle(this.options.stopAngle);
-    } else {
-      return fixAngle(this.options.startAngle);
-    }
+    return fixAngle(this.options.startAngle + this.options.stopAngle);
   },
 
   startAngle() {
-    if (this.options.startAngle < this.options.stopAngle) {
-      return fixAngle(this.options.startAngle);
-    } else {
-      return fixAngle(this.options.stopAngle);
-    }
+    return fixAngle(this.options.startAngle);
   },
 
   _isValidSector() {
@@ -31,12 +23,17 @@ const sectorMixin = () => ({
     if (isNaN(this.options.stopAngle)) {
       throw new Error("Stop angle cannot be NaN");
     }
-    if (this.options.startAngle >= this.options.stopAngle) {
-      throw new Error("Stop angle must be greater than the start angle");
+    if (this.options.stopAngle === 0) {
+        throw new Error("Stop angle cannot be 0");
+    }
+    if (this.options.startAngle >= 360.0) {
+      this.options.startAngle = this.options.startAngle % 360.0;
+    }
+    if (this.options.stopAngle >= 360.0) {
+      this.options.stopAngle = this.options.stopAngle % 360.0;
     }
   },
 });
-
 
 const annularMixin = () => ({
     /* Override Circle _project */
@@ -192,8 +189,7 @@ SVG.include({
       end = p.rotated(layer.stopAngle(), r),
       innerStart = p.rotated(layer.startAngle(), innerR),
       innerEnd = p.rotated(layer.stopAngle(), innerR);
-    const largeArc =
-      layer.options.stopAngle - layer.options.startAngle >= 180 ? "1" : "0";
+    const largeArc = layer.options.stopAngle >= 180 ? "1" : "0";
     /*
      * Start from the annulus's perimeter at the opening angle, draw the arc
      * until the stop angle, draw the line representing R - r then draw
@@ -258,8 +254,7 @@ SVG.include({
       r2 = Math.max(Math.round(layer._radiusY), 1) || r;
     const start = p.rotated(layer.startAngle(), r),
       end = p.rotated(layer.stopAngle(), r);
-    const largeArc =
-      layer.options.stopAngle - layer.options.startAngle >= 180 ? "1" : "0";
+    const largeArc = layer.options.stopAngle >= 180 ? "1" : "0";
     /*
      * Start from the disk's perimeter at the opening angle, draw the arc
      * until the stop angle then draw the radius.
