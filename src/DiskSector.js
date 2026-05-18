@@ -37,8 +37,7 @@ SVG.include({
       r2 = Math.max(Math.round(layer._radiusY), 1) || r;
     const start = p.rotated(layer.startAngle(), r),
       end = p.rotated(layer.stopAngle(), r);
-    const largeArc =
-      layer.options.stopAngle - layer.options.startAngle >= 180 ? "1" : "0";
+    const largeArc = layer.options.stopAngle >= 180 ? "1" : "0";
     /*
      * Start from the disk's perimeter at the opening angle, draw the arc
      * until the stop angle then draw the radius.

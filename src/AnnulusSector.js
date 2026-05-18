@@ -45,8 +45,7 @@ SVG.include({
       end = p.rotated(layer.stopAngle(), r),
       innerStart = p.rotated(layer.startAngle(), innerR),
       innerEnd = p.rotated(layer.stopAngle(), innerR);
-    const largeArc =
-      layer.options.stopAngle - layer.options.startAngle >= 180 ? "1" : "0";
+    const largeArc = layer.options.stopAngle >= 180 ? "1" : "0";
     /*
      * Start from the annulus's perimeter at the opening angle, draw the arc
      * until the stop angle, draw the line representing R - r then draw
